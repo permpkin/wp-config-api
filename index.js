@@ -2,7 +2,7 @@ const express = require('express');
 
 const App = express();
 
-const Port = 3000;
+const Port = process.env.PORT || 3000;
 
 const File = require('fs');
 
