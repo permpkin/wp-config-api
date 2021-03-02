@@ -50,6 +50,15 @@ var Paths = [
 App.use(express.json());
 
 /**
+ * Respond to base route
+ */
+App.get('/', (req, res) => {
+  
+  res.sendStatus(200)
+
+})
+
+/**
  * Inject config json for modification.
  */
 App.post('/init', (req, res) => {
