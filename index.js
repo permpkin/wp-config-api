@@ -17,8 +17,6 @@ const ConfigCache = new NodeCache({
   maxKeys: 1024
 });
 
-const ConfigFile = `${__dirname}/@config.json`;
-
 const { v4: uuidv4 } = require('uuid')
 
 Array.prototype.unique = () => {
@@ -206,7 +204,7 @@ App.post('/:ckey/:type', (req, res) => {
     req.config[req.params.type] = Result;
 
     // update @config json
-    File.writeFileSync(ConfigFile, JSON.stringify(req.config, null, 4));
+    ConfigCache.set(req.params.ckey, req.config, ttl)
 
     // return the updated json fields (by :type)
     res.status(200).json(req.config[req.params.type]);
