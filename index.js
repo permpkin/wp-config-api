@@ -73,9 +73,12 @@ App.get('/', (req, res) => res.sendStatus(200))
  */
 App.get('/default', (req, res) => {
 
+  // TODO: replace with joi defaults.
   // return default config json
   res.json({
-    'overrides': {},
+    'overrides': {
+      hide_block_categories: []
+    },
     'blocks': [],
     'fields': [],
     'options': [],
