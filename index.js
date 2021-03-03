@@ -4,8 +4,6 @@ const App = express();
 
 const Port = process.env.PORT || 3000;
 
-const File = require('fs');
-
 const NodeCache = require( "node-cache" );
 
 const ConfigSchema = require('./schema/config');
