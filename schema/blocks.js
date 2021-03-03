@@ -13,6 +13,7 @@ const schema = Joi.object({
     icon: Joi.string(),
   }),
   keywords: Joi.array(),
+  post_types: Joi.array(),
   align: Joi.string(), // add default
   "@styles": Joi.array().items(require('./styles')),
   "@scripts": Joi.array().items(require('./scripts')),
