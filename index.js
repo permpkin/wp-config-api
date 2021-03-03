@@ -42,6 +42,7 @@ var Paths = [
   'settings',
   'styles',
   'supports',
+  'taxonomies',
   'types'
 ];
 

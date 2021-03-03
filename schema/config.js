@@ -9,6 +9,7 @@ const schema = Joi.object({
   scripts: Joi.array().items(require('./scripts')),
   fields: Joi.array().items(require('./fields')),
   types: Joi.array().items(require('./types')),
+  taxonomies: Joi.array().items(require('./taxonomies')),
   blocks: Joi.array().items(require('./blocks')),
   pages: Joi.array().items(require('./pages')),
   settings: Joi.array().items(require('./settings')),
