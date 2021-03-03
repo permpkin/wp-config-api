@@ -41,7 +41,6 @@ var Paths = [
   'scripts',
   'settings',
   'styles',
-  'supports',
   'taxonomies',
   'types'
 ];
@@ -75,7 +74,8 @@ App.get('/default', (req, res) => {
   // return default config json
   res.json({
     'overrides': {
-      hide_block_categories: []
+      hide_block_categories: [],
+      theme_support: []
     },
     'blocks': [],
     'fields': [],
@@ -85,7 +85,6 @@ App.get('/default', (req, res) => {
     'scripts': [],
     'settings': [],
     'styles': [],
-    'supports': [],
     'taxonomies': [],
     'types': []
   })
