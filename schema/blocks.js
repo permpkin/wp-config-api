@@ -12,7 +12,8 @@ const schema = Joi.object({
     title: Joi.string(),
     icon: Joi.string(),
   }),
-  align: Joi.string().required(),
+  keywords: Joi.array(),
+  align: Joi.string(), // add default
   "@styles": Joi.array().items(require('./styles')),
   "@scripts": Joi.array().items(require('./scripts')),
   "@fields": Joi.array().items(require('./fields')),
