@@ -14,7 +14,10 @@ const schema = Joi.object({
   }),
   keywords: Joi.array(),
   post_types: Joi.array(),
+  supports: Joi.array(),
+  mode: Joi.string(),
   align: Joi.string(), // add default
+  example: Joi.object(),
   "@styles": Joi.array().items(require('./styles')),
   "@scripts": Joi.array().items(require('./scripts')),
   "@fields": Joi.array().items(require('./fields')),
