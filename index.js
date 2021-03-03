@@ -86,6 +86,7 @@ App.get('/default', (req, res) => {
     'settings': [],
     'styles': [],
     'supports': [],
+    'taxonomies': [],
     'types': []
   })
 
