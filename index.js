@@ -69,6 +69,28 @@ App.use((req, res, next) => {
 App.get('/', (req, res) => res.sendStatus(200))
 
 /**
+ * Get current config defaults.
+ */
+App.get('/default', (req, res) => {
+
+  // return default config json
+  res.json({
+    'overrides': {},
+    'blocks': [],
+    'fields': [],
+    'options': [],
+    'origins': [],
+    'pages': [],
+    'scripts': [],
+    'settings': [],
+    'styles': [],
+    'supports': [],
+    'types': []
+  })
+
+})
+
+/**
  * Inject config json for modification.
  */
 App.post('/init', (req, res) => {
