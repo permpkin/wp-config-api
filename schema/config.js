@@ -4,7 +4,6 @@ const schema = Joi.object({
   
   origins: require('./origins'),
   overrides: require('./overrides'),
-  supports: require('./supports'),
   styles: Joi.array().items(require('./styles')),
   scripts: Joi.array().items(require('./scripts')),
   fields: Joi.array().items(require('./fields')),
