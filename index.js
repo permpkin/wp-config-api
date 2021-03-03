@@ -47,7 +47,21 @@ var Paths = [
   'types'
 ];
 
+/**
+ * Add JSON parser
+ */
 App.use(express.json());
+
+/**
+ * Add acccess headers
+ */
+App.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+  next();
+});
 
 /**
  * Respond to base route
