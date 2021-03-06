@@ -44,11 +44,6 @@ var Paths = [
 ];
 
 /**
- * Add JSON parser
- */
-App.use(express.json());
-
-/**
  * Add acccess headers
  */
 App.use((req, res, next) => {
@@ -57,6 +52,11 @@ App.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+/**
+ * Add JSON parser
+ */
+App.use(express.json());
 
 /**
  * Respond to base route
