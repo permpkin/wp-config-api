@@ -259,17 +259,8 @@ App.delete('/:ckey/:type/:key', (req, res) => {
   // override key value
   ConfigCache.set(req.params.ckey, req.config, ttl)
 
-  if (req.params.type in req.config) {
-
-    // send updated config key result.
-    res.status(200).send(req.config[req.params.type]);
-
-  } else {
-
-    // send empty config key result.
-    res.status(200).send(null);
-
-  }
+  // send updated config key result.
+  res.status(200).send(req.config[req.params.type]);
 
 })
 
