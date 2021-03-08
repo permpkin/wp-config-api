@@ -244,8 +244,6 @@ App.delete('/:ckey/:type/:key', (req, res) => {
 
     req.config[req.params.type] = Target.filter((v) => v.key != req.params.key)
 
-    if (req.config[req.params.type].length == 0) delete req.config[req.params.type];
-
   } else {
 
     if (!(req.params.key in req.config[req.params.type])) return res.send(404);
