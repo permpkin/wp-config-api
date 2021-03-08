@@ -254,8 +254,6 @@ App.delete('/:ckey/:type/:key', (req, res) => {
 
     delete req.config[req.params.type][req.params.key]
 
-    if (Object.keys(req.config[req.params.type]).length < 0) delete req.config[req.params.type];
-
   }
   
   // override key value
