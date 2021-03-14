@@ -20,6 +20,7 @@ const schema = Joi.object({
   menu_position: Joi.number(),
   show_in_admin_bar: Joi.boolean(),
   show_in_nav_menus: Joi.boolean(),
+  show_in_rest: Joi.boolean(),
   can_export: Joi.boolean(),
   has_archive: Joi.boolean(),
   exclude_from_search: Joi.boolean(),
