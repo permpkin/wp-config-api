@@ -135,7 +135,7 @@ module.exports = () => {
     // is the body object empty?
     if (Object.entries(req.body).length <= 0) return res.sendStatus(400);
 
-    var Schema = require(`../../../../../schema/config/${req.params.type}`)
+    var { Schema } = require(`../../../../../schema/config/${req.params.type}`)
     
     // validate the body
     var Result = ObjectValidator(Schema, req, res, req.body, req.params.type in req.config ? req.config[req.params.type] : false);

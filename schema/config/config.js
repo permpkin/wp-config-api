@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const schema = Joi.object({
+const Schema = Joi.object({
   
   origins: require('./origins'),
   styles: Joi.array().items(require('./styles')),
@@ -15,4 +15,4 @@ const schema = Joi.object({
 
 })
 
-module.exports = schema
+module.exports = { Schema }

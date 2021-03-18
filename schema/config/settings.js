@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const schema = Joi.object({
+const Schema = Joi.object({
 
   hide_block_categories: Joi.array(),
   theme_support: Joi.array().items(Joi.alternatives(
@@ -23,4 +23,4 @@ const schema = Joi.object({
 
 })
 
-module.exports = schema
+module.exports = { Schema }
