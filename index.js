@@ -115,6 +115,9 @@ App.use(require('./routes/auth/')())
 // Secure Route Middleware
 const SecureRoute = require('./routes/auth/middleware/secure')
 
+// Secure API Route Middleware
+const SecureApiRoute = require('./routes/auth/middleware/secure-api')
+
 /**
  * Load API Routes
  * @description load api routes.
@@ -122,7 +125,7 @@ const SecureRoute = require('./routes/auth/middleware/secure')
 process.env.API_ROUTES.split(',').forEach(segment => {
   
   // setup api route
-  App.use(`/api/v${segment}`, SecureRoute, require(`./routes/api/v${segment}/`)())
+  App.use(`/api/v${segment}`, SecureApiRoute, require(`./routes/api/v${segment}/`)())
 
 })
 
