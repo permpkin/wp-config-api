@@ -6,6 +6,8 @@ const Port = process.env.PORT || 3000;
 
 const Session = require('express-session');
 
+const Cors = require('cors')
+
 const DotEnv = require('dotenv')
 
 const FileStore = require('session-file-store')(Session);
@@ -24,6 +26,9 @@ Array.prototype.unique = () => {
 
 // Load environment variables from .env
 DotEnv.config()
+
+// Use default CORS
+App.use(Cors())
 
 // const { InitUserMeta, UpdateAppMeta } = require('./schema/meta')
 
@@ -79,16 +84,6 @@ Passport.use(new Auth0Strategy(
 App.use(Passport.initialize());
 
 App.use(Passport.session());
-
-/**
- * Add acccess headers
- */
-App.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS,HEAD');
-  res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, User-Agent, Referer');
-  next();
-});
 
 /**
  * Add JSON parser
