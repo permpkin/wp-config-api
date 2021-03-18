@@ -1,9 +1,9 @@
 const Joi = require('joi');
+const { GetKey } = require('../meta')
 
-// TODO: replace this, it's just a clone of types
 const schema = Joi.object({
   
-  key: Joi.string().required(),
+  key: Joi.string().default((parent, helpers)=>{return GetKey()}),
   
   object_type: Joi.array().items(Joi.string()),
   labels: Joi.object({
@@ -28,18 +28,18 @@ const schema = Joi.object({
   meta_box_cb: Joi.string(),
   meta_box_sanitize_cb: Joi.string(),
   capabilities: Joi.array().items(Joi.string()), // TODO: update to match
-  rewrite: Joi.any(
+  rewrite: Joi.alternatives(
     Joi.boolean(),
     Joi.object({
       slug: Joi.string(),
       with_front: Joi.boolean(),
       hierarchical: Joi.boolean(),
-      ep_mask: Joi.number(),
+      ep_mask: Joi.string(),
     })
   ),
   query_var: Joi.string(),
   update_count_callback: Joi.string(),
-  default_term: Joi.any(
+  default_term: Joi.alternatives(
     Joi.string(),
     Joi.object({
       name: Joi.string(),

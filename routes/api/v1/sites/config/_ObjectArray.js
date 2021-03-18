@@ -1,6 +1,4 @@
-const schema = require('../schema/options');
-
-module.exports = (req, res, config, original) => {
+module.exports = (schema, req, res, config, original) => {
 
   if (original !== false)
   {
@@ -27,21 +25,25 @@ module.exports = (req, res, config, original) => {
 
       if (originalItemIndex >= 0) {
 
-        original[originalItemIndex] = {...original[originalItemIndex], ...config}
+        original[originalItemIndex] = {...original[originalItemIndex], ...result.value}
+
+        return { value: original, index: originalItemIndex }
 
       } else {
 
-        original[original.length] = config
+        original[original.length] = result.value
+
+        return { value: original, index: original.length - 1 }
 
       }
-
-      return original;
 
     }
 
   } else {
+
+    var result = schema.validate(config);
     
-    return config;
+    return { value: [result.value], index: 0 };
 
   }
 

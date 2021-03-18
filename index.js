@@ -4,18 +4,11 @@ const App = express();
 
 const Port = process.env.PORT || 3000;
 
-const NodeCache = require( "node-cache" );
+const Session = require('express-session');
 
-const ConfigSchema = require('./schema/config');
+const DotEnv = require('dotenv')
 
-const ttl = 900
-
-const ConfigCache = new NodeCache({
-  ttl: ttl,
-  maxKeys: 1024
-});
-
-const { v4: uuidv4 } = require('uuid')
+const FileStore = require('session-file-store')(Session);
 
 Array.prototype.unique = () => {
   var a = this.concat();
@@ -29,236 +22,125 @@ Array.prototype.unique = () => {
   return a;
 };
 
-var Paths = [
-  'blocks',
-  'fields',
-  'options',
-  'origins',
-  'overrides',
-  'pages',
-  'scripts',
-  'settings',
-  'styles',
-  'taxonomies',
-  'types'
-];
+// Load environment variables from .env
+DotEnv.config()
+
+// const { InitUserMeta, UpdateAppMeta } = require('./schema/meta')
+
+// Define static folder.
+App.use(express.static('assets'))
+
+// Use "Pug" view engine.
+App.set('view engine', 'pug')
+
+// FIX: storing sessions local ./sesssion/*.json
+App.use(Session({
+  store: new FileStore({
+    //
+  }),
+  secret: process.env.SESSION_SECRET,
+  cookie: {
+    sameSite: false
+  },
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Load Passport
+const Passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+
+// Configure Passport to use Auth0
+Passport.use(new Auth0Strategy(
+  {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL: `${process.env.AUTH0_CALLBACK_URL}/api/callback`
+  },
+  (accessToken, refreshToken, extraParams, profile, done) => {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+
+    // InitUserMeta(profile.id.substring(6, profile.id.length))
+    //   .then(value => {
+
+    //     UpdateAppMeta(profile, )
+
+    //     console.log('value', value)
+
+    //   })
+
+    return done(null, profile);
+  }
+));
+
+App.use(Passport.initialize());
+
+App.use(Passport.session());
 
 /**
  * Add acccess headers
  */
-App.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,HEAD');
-  res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, User-Agent, Referer');
-  next();
-});
+// App.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,HEAD');
+//   res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, User-Agent, Referer');
+//   next();
+// });
 
 /**
  * Add JSON parser
  */
 App.use(express.json());
 
-/**
- * Respond to base route
- */
-App.get('/', (req, res) => res.sendStatus(200))
-
-/**
- * Get current config defaults.
- */
-App.get('/default', (req, res) => {
-
-  // TODO: replace with joi defaults.
-  // return default config json
-  res.json({
-    'overrides': {
-      hide_block_categories: [],
-      theme_support: []
-    },
-    'blocks': [],
-    'fields': [],
-    'options': [],
-    'origins': [],
-    'pages': [],
-    'scripts': [],
-    'settings': [],
-    'styles': [],
-    'taxonomies': [],
-    'types': []
-  })
-
-})
-
-/**
- * Inject config json for modification.
- */
-App.post('/init', (req, res) => {
-
-  if (!Object.keys(req.body).length) return res.sendStatus(400);
-
-  var errors = [];
-
-  var result = ConfigSchema.validate(req.body);
-
-  if ("error" in result) {
-    errors.push(result.error.message)
-  };
-
-  if (errors.length > 0) {
-
-    // return json errors
-    res.status(400).json({errors: errors})
-
-  } else {
-
-    var cKeyId = uuidv4();
-
-    // store config.
-    var keySet = ConfigCache.set(cKeyId, req.body, ttl)
-    
-    if (keySet)
-      res.status(200).send({
-        key: cKeyId
-      })
-    else
-      res.sendStatus(400)
-
-  }
-
-
-})
-
-/**
- * Inject config file into request model
- */
-App.use('/:ckey/*', (req, res, next) => {
-
-  // if key is not valid return 404.
-  if (req.params.ckey.length !== 36) return res.sendStatus(404);
-
-  // attempt to grab the cached config.
-  var ckey = ConfigCache.get(req.params.ckey);
-
-  // return 404 if key is not found.
-  if (ckey == undefined) return res.sendStatus(404);
-
-  // if we have the config, assign it the to request class
-  req.config = ckey;
-
-  req.modified = false;
-
-  next();
-
+// Store and retrieve user data from the session
+Passport.serializeUser((user, done) => {
+  // console.log('>>>Serial', user)
+  done(null, user);
+});
+Passport.deserializeUser((user, done) => {
+  // console.log('>>>Deserial', user)
+  done(null, user);
 });
 
+// User Middleware
+App.use(require('./routes/auth/middleware/user')())
+
+// Auth Routes
+App.use(require('./routes/auth/')())
+
+// Secure Route Middleware
+const SecureRoute = require('./routes/auth/middleware/secure')
+
 /**
- * Check if :type is a valid request.
+ * Load API Routes
+ * @description load api routes.
  */
-App.use('/:ckey/:type', (req, res, next) => {
-
-  if (Paths.indexOf(req.params.type) < 0) return res.sendStatus(404);
-
-  next()
+process.env.API_ROUTES.split(',').forEach(segment => {
+  
+  // setup api route
+  App.use(`/api/v${segment}`, SecureRoute, require(`./routes/api/v${segment}/`)())
 
 })
 
 /**
- * Return config key fields by :type
+ * Base route
+ * @description check auth state, supply SPA if logged in.
  */
-App.get('/:ckey/:type', (req, res) => {
+App.get('/', SecureRoute, (req, res) => {
 
-  if (Paths.indexOf(req.params.type) >= 0) {
-    
-    res.send(req.config[req.params.type]);
+  // list user meta
+  // res.status(200).send({
+  //   displayName: req.user.displayName,
+  //   name: req.user.name,
+  //   picture: req.user.picture,
+  //   verified: req.user._json.email_verified,
+  //   plan: null
+  // })
 
-  } else {
-    
-    res.sendStatus(404);
-
-  }
-
-})
-
-/**
- * Update/Insert config key by :type
- */
-App.post('/:ckey/:type', (req, res) => {
-
-  req.errors = [];
-
-  // is the body object empty?
-  if (Object.entries(req.body).length <= 0) return res.sendStatus(400);
-
-  // include the :type validator
-  var Validator = require(`./paths/${req.params.type}.js`);
-  
-  // validate the body
-  var Result = Validator(req, res, req.body, req.params.type in req.config ? req.config[req.params.type] : false);
-
-  // if the result has not failed
-  if (Result !== false) {
-
-    req.modified = true;
-
-    req.config[req.params.type] = Result;
-
-    // update @config json
-    ConfigCache.set(req.params.ckey, req.config, ttl)
-
-    // return the updated json fields (by :type)
-    res.status(200).json(req.config[req.params.type]);
-
-  } else {
-
-    // where there errors?
-    if (req.errors.length > 0) {
-
-      // return json errors
-      res.status(400).json({errors: req.errors})
-
-    } else {
-
-      // not modified
-      res.sendStatus(304);
-
-    }
-
-  };
-
-});
-
-/**
- * Delete the entry by key
- */
-App.delete('/:ckey/:type/:key', (req, res) => {
-
-  req.errors = [];
-  
-  var Target = req.config[req.params.type];
-  
-  if (Array.isArray(Target)) {
-
-    if (!Target.filter((o) => o.hasOwnProperty(req.params.key)).length == 0) return res.send(404);
-
-    // remove array item by key
-
-    req.config[req.params.type] = Target.filter((v) => v.key != req.params.key)
-
-  } else {
-
-    if (!(req.params.key in req.config[req.params.type])) return res.send(404);
-
-    // remove object key
-
-    delete req.config[req.params.type][req.params.key]
-
-  }
-  
-  // override key value
-  ConfigCache.set(req.params.ckey, req.config, ttl)
-
-  // send updated config key result.
-  res.status(200).send(req.config[req.params.type]);
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
 
 })
 

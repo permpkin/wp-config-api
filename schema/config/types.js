@@ -1,8 +1,9 @@
 const Joi = require('joi');
+const { GetKey } = require('../meta')
 
 const schema = Joi.object({
   
-  key: Joi.string().required(),
+  key: Joi.string().default((parent, helpers)=>{return GetKey()}),
 
   label: Joi.string(),
   labels: Joi.object({
@@ -34,7 +35,7 @@ const schema = Joi.object({
   has_archive: Joi.boolean(),
   rewrite: Joi.boolean(),
     // { slug:string, with_front:bool, feeds:bool, pages:bool, ep_mask:int }
-  query_var: Joi.any(
+  query_var: Joi.alternatives(
     Joi.string(),
     Joi.boolean()
   ),
@@ -46,7 +47,8 @@ const schema = Joi.object({
   "@styles": Joi.array().items(require('./styles')),
   "@scripts": Joi.array().items(require('./scripts')),
   "@fields": Joi.array().items(require('./fields')),
-  "@options": Joi.array().items(require('./options'))
+  "@pages": Joi.array().items(require('./pages')),
+  "@taxonomies": Joi.array().items(require('./taxonomies'))
 
 })
 
