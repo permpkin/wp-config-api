@@ -30,6 +30,11 @@ DotEnv.config()
 // Use default CORS
 App.use(Cors())
 
+App.options('*', Cors({
+  origin: '*',
+  optionsSuccessStatus: 200 
+}));
+
 // const { InitUserMeta, UpdateAppMeta } = require('./schema/meta')
 
 // Define static folder.
