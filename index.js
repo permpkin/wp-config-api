@@ -83,12 +83,12 @@ App.use(Passport.session());
 /**
  * Add acccess headers
  */
-// App.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,HEAD');
-//   res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, User-Agent, Referer');
-//   next();
-// });
+App.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", '*');
+  // res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,HEAD');
+  // res.header("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Type, Accept, User-Agent, Referer');
+  next();
+});
 
 /**
  * Add JSON parser
