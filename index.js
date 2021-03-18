@@ -28,7 +28,7 @@ Array.prototype.unique = () => {
 DotEnv.config()
 
 const CorsOpts = Cors({
-  origin: [process.env.URL, 'http://localhost:3000'],
+  origin: [process.env.URL, 'https://wp-factory-api.au.ngrok.io'],
   optionsSuccessStatus: 200 
 })
 
