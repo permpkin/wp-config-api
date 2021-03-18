@@ -109,7 +109,7 @@ const GetAppMeta = (User) => {
     Auth0ManageClient.getUser(User)
       .then(value => {
 
-        resolve(value.app_metadata)
+        resolve(value?.app_metadata || {})
 
       })
 

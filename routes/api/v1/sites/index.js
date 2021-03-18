@@ -43,7 +43,7 @@ module.exports = () => {
 
         UpdatedMeta.push(SiteMeta)
 
-        meta.sites = UpdatedMeta
+        meta['sites'] = UpdatedMeta
 
         UpdateAppMeta(req.user, meta)
           .then(() => {
