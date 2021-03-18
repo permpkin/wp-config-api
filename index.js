@@ -2,7 +2,7 @@ const express = require('express');
 
 const App = express();
 
-const Port = process.env.PORT || 3000;
+const Port = process.env.PORT || 5000;
 
 const Session = require('express-session');
 
@@ -28,7 +28,7 @@ Array.prototype.unique = () => {
 DotEnv.config()
 
 const CorsOpts = Cors({
-  origin: [process.env.URL, 'https://wp-factory-api.au.ngrok.io'],
+  origin: [process.env.URL, 'https://wp-factory-api.au.ngrok.io', 'https://localhost:3000'],
   optionsSuccessStatus: 200 
 })
 
