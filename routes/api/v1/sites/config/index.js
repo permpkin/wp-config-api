@@ -91,7 +91,6 @@ module.exports = () => {
     'scripts',
     'styles',
     'taxonomies',
-    'actions',
     'roles',
     'types'
   ];
@@ -213,6 +212,26 @@ module.exports = () => {
         res.status(200).json(req.config[req.params.type]);
 
       })
+
+  })
+
+  /**
+   * Return config key fields by :type
+   */
+  Router.get('/:type/schema', (req, res) => {
+
+    if (Paths.indexOf(req.params.type) >= 0) {
+
+      // send key schema
+      var { SchemaDoc } = require(`../../../../../schema/config/${req.params.type}`)
+
+      res.json(SchemaDoc)
+
+    } else {
+      
+      res.sendStatus(404);
+
+    }
 
   })
 
