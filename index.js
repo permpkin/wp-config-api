@@ -27,13 +27,14 @@ Array.prototype.unique = () => {
 // Load environment variables from .env
 DotEnv.config()
 
-// Use default CORS
-App.use(Cors())
-
-App.options('*', Cors({
-  origin: '*',
+const CorsOpts = Cors({
+  origin: [process.env.URL, 'http://localhost:3000'],
   optionsSuccessStatus: 200 
-}));
+})
+
+// Use default CORS
+App.use(CorsOpts)
+App.options('*', CorsOpts);
 
 // const { InitUserMeta, UpdateAppMeta } = require('./schema/meta')
 
