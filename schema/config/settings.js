@@ -1,18 +1,15 @@
 const Joi = require('joi');
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
 
   hide_block_categories: Joi.array(),
-  theme_support: Joi.array().items(Joi.alternatives(
-  
+  theme_support: Joi.array().items(
     Joi.string().valid('align-wide', 'editor-styles', 'post-formats', 'post-thumbnails', 'html5', 'title-tag', 'custom-background'),
-    Joi.array().items(Joi.string())
-  
-  )),
+  ),
   allowed_origins: Joi.array().items(Joi.string()).default(['*']),
   disabled_admin_pages: Joi.array().items(Joi.string().valid('dashboard','jetpack','posts','media','pages','comments','appearance','plugins','users','tools','settings')),
   disabled_user_roles: Joi.array().items(Joi.string()),
-  image_sizes: Joi.array().items(Joi.object({
+  image_sizes: Joi.array().items(Joi.object().keys({
     name: Joi.string(),
     width: Joi.number(),
     height: Joi.number(),

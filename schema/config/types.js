@@ -1,12 +1,20 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+// fields
+const StylesField = require('./styles');
+// const StylesField = () => { const { Schema } = require('./styles'); return Schema };
+// const ScriptsField = () => { const { Schema } = require('./scripts'); return Schema };
+// const CustomFields = () => { const { Schema } = require('./fields'); return Schema };
+// const PageField = () => { const { Schema } = require('./pages'); return Schema };
+// const TaxonomyField = () => { const { Schema } = require('./taxonomies'); return Schema };
+
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
 
   label: Joi.string(),
-  labels: Joi.object({
+  labels: Joi.object().keys({
     name: Joi.string(),
     singular_name: Joi.string(),
     menu_name: Joi.string(),
@@ -33,22 +41,19 @@ const Schema = Joi.object({
   register_meta_box_cb: Joi.string(),
   taxonomies: Joi.array().items(Joi.string()),
   has_archive: Joi.boolean(),
-  rewrite: Joi.boolean(),
+  rewrite: Joi.string(),
     // { slug:string, with_front:bool, feeds:bool, pages:bool, ep_mask:int }
-  query_var: Joi.alternatives(
-    Joi.string(),
-    Joi.boolean()
-  ),
+  query_var: Joi.string(),
   can_export: Joi.boolean(),
   delete_with_user: Joi.boolean(),
   template: Joi.array().items(Joi.string()), // replace with @blocks[]
   template_lock: Joi.string().valid('all', 'insert'),
 
-  "@styles": Joi.array().items(require('./styles')),
-  "@scripts": Joi.array().items(require('./scripts')),
-  "@fields": Joi.array().items(require('./fields')),
-  "@pages": Joi.array().items(require('./pages')),
-  "@taxonomies": Joi.array().items(require('./taxonomies'))
+  "@styles": Joi.array().items(require('./styles').Schema),
+  "@scripts": Joi.array().items(require('./scripts').Schema),
+  "@fields": Joi.array().items(require('./fields').Schema),
+  "@pages": Joi.array().items(require('./pages').Schema),
+  "@taxonomies": Joi.array().items(require('./taxonomies').Schema)
 
 })
 
@@ -326,10 +331,10 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'description',
-      'public',
-      'hierarchical'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Description", key: "description" },
+      { label: "Public", key: "public", type: "boolean" },
+      { label: "Hierarchical", key: "hierarchical", type: "boolean" }
     ]
   }
 }

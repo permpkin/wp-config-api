@@ -1,18 +1,22 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
 
   type: Joi.string().valid('option', 'comments', 'menu', 'settings', 'pages', 'themes', 'links', 'users', 'management', 'media'),
   page_title: Joi.string(),
+  description: Joi.string(),
   menu_title: Joi.string(),
+  capability: Joi.array().items(Joi.string()),
   menu_slug: Joi.string(),
-  capability: Joi.string(),
-  position: Joi.number(),
+  function: Joi.string(),
   icon_url: Joi.string(),
-  callback: Joi.string()
+  position: Joi.number(),
+  "@styles": Joi.array().items(require('./styles').Schema),
+  "@scripts": Joi.array().items(require('./scripts').Schema),
+
 
   // SETTINGS TYPESET
   // title: Joi.string(),
@@ -121,9 +125,9 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'page_title',
-      'description'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Title", key: "page_title" },
+      { label: "Description", key: "description" }
     ]
   }
 }

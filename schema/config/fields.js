@@ -1,20 +1,26 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey('group_')}),
 
   title: Joi.string().required(),
-  fields: Joi.array().items(Joi.object({
+  description: Joi.string(),
+  location: Joi.array().items(
+    Joi.array()
+  ),
+  menu_order: Joi.string(),
+  position: Joi.string(),
+  style: Joi.string(),
+  label_placement: Joi.string(),
+  hide_on_screen: Joi.array().items(Joi.string()),
+  fields: Joi.array().items(Joi.object().keys({
     key: Joi.string().default((parent, helpers)=>{return GetKey('field_')}),
     label: Joi.string(),
     name: Joi.string(),
     type: Joi.string()
-  })).required(),
-  location: Joi.array().items(
-    Joi.array()
-  ),
+  })).required()
 
 })
 
@@ -103,9 +109,9 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'title',
-      'description'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Title", key: "title" },
+      { label: "Description", key: "description" },
     ]
   }
 }

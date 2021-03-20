@@ -1,10 +1,10 @@
-const schema = require('../../../../../schema/config/settings');
+const { Schema } = require('../../../../../schema/config/settings');
 
 module.exports = (req, res, config) => {
 
   var errors = [];
 
-  var result = schema.validate(config);
+  var result = Schema.validate(config);
 
   if ("error" in result) {
     errors.push(result.error.message)

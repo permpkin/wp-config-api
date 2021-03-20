@@ -1,15 +1,18 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
   
   source: Joi.string().required(),
-  dependencies: Joi.array().items(Joi.alternatives().try(Joi.string(), Joi.object({
-    id: Joi.string(),
-    version: Joi.string()
-  }))),
+  dependencies: Joi.array().items(Joi.alternatives(
+    Joi.string(),
+    Joi.object({
+      id: Joi.string(),
+      version: Joi.string()
+    })
+  )),
   version: Joi.string(),
   location: Joi.array().items(Joi.string().valid('front', 'back', 'all')).required(),
   footer: Joi.boolean(),
@@ -73,12 +76,12 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'source',
-      'dependencies',
-      'version',
-      'location',
-      'footer'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Source", key: "source" },
+      { label: "Dependencies", key: "dependencies", type: "dependency[]" },
+      { label: "Version", key: "version" },
+      { label: "Location", key: "location", type: "string[]" },
+      { label: "Footer", key: "footer", type: "boolean" }
     ]
   }
 }

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
 
@@ -9,20 +9,21 @@ const Schema = Joi.object({
   title: Joi.string(),
   description: Joi.string(),
   icon: Joi.string(),
-  category: Joi.object({
-    slug: Joi.string(),
-    title: Joi.string(),
-    icon: Joi.string(),
-  }),
+  category: Joi.array().items(Joi.string()),
+  // category: Joi.object().keys({
+  //   slug: Joi.string(),
+  //   title: Joi.string(),
+  //   icon: Joi.string(),
+  // }),
   keywords: Joi.array(),
   post_types: Joi.array(),
   supports: Joi.array(),
   mode: Joi.string(),
   align: Joi.string(), // add default
   example: Joi.object(),
-  "@styles": Joi.array().items(require('./styles')),
-  "@scripts": Joi.array().items(require('./scripts')),
-  "@fields": Joi.array().items(require('./fields')),
+  "@styles": Joi.array().items(require('./styles').Schema),
+  "@scripts": Joi.array().items(require('./scripts').Schema),
+  "@fields": Joi.array().items(require('./fields').Schema),
 
 })
 
@@ -172,10 +173,10 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'description',
-      'category',
-      'keywords'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Description", key: "description" },
+      { label: "Category", key: "category", type: "string[]" },
+      { label: "Keywords", key: "keywords", type: "string[]" }
     ]
   }
 }

@@ -12,18 +12,6 @@ const DotEnv = require('dotenv')
 
 const FileStore = require('session-file-store')(Session);
 
-Array.prototype.unique = () => {
-  var a = this.concat();
-  for(var i=0; i<a.length; ++i) {
-      for(var j=i+1; j<a.length; ++j) {
-          if(a[i] === a[j])
-              a.splice(j--, 1);
-      }
-  }
-
-  return a;
-};
-
 // Load environment variables from .env
 DotEnv.config()
 
@@ -57,60 +45,64 @@ App.use(Session({
   saveUninitialized: true
 }));
 
-// Load Passport
-const Passport = require('passport');
-const Auth0Strategy = require('passport-auth0');
-
-// Configure Passport to use Auth0
-Passport.use(new Auth0Strategy(
-  {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: `${process.env.AUTH0_CALLBACK_URL}/api/callback`
-  },
-  (accessToken, refreshToken, extraParams, profile, done) => {
-    // accessToken is the token to call Auth0 API (not needed in the most cases)
-    // extraParams.id_token has the JSON Web Token
-    // profile has all the information from the user
-
-    // InitUserMeta(profile.id.substring(6, profile.id.length))
-    //   .then(value => {
-
-    //     UpdateAppMeta(profile, )
-
-    //     console.log('value', value)
-
-    //   })
-
-    return done(null, profile);
-  }
-));
-
-App.use(Passport.initialize());
-
-App.use(Passport.session());
-
 /**
  * Add JSON parser
  */
 App.use(express.json());
 
-// Store and retrieve user data from the session
-Passport.serializeUser((user, done) => {
-  // console.log('>>>Serial', user)
-  done(null, user);
-});
-Passport.deserializeUser((user, done) => {
-  // console.log('>>>Deserial', user)
-  done(null, user);
-});
+if (!process.env?.DISABLE_AUTH) {
+
+  // Load Passport
+  const Passport = require('passport');
+  const Auth0Strategy = require('passport-auth0');
+
+  // Configure Passport to use Auth0
+  Passport.use(new Auth0Strategy(
+    {
+      domain: process.env.AUTH0_DOMAIN,
+      clientID: process.env.AUTH0_CLIENT_ID,
+      clientSecret: process.env.AUTH0_CLIENT_SECRET,
+      callbackURL: `${process.env.AUTH0_CALLBACK_URL}/api/callback`
+    },
+    (accessToken, refreshToken, extraParams, profile, done) => {
+      // accessToken is the token to call Auth0 API (not needed in the most cases)
+      // extraParams.id_token has the JSON Web Token
+      // profile has all the information from the user
+
+      // InitUserMeta(profile.id.substring(6, profile.id.length))
+      //   .then(value => {
+
+      //     UpdateAppMeta(profile, )
+
+      //     console.log('value', value)
+
+      //   })
+
+      return done(null, profile);
+    }
+  ));
+
+  App.use(Passport.initialize());
+
+  App.use(Passport.session());
+
+  // Store and retrieve user data from the session
+  Passport.serializeUser((user, done) => {
+    // console.log('>>>Serial', user)
+    done(null, user);
+  });
+  Passport.deserializeUser((user, done) => {
+    // console.log('>>>Deserial', user)
+    done(null, user);
+  });
+
+  // Auth Routes
+  App.use(require('./routes/auth/')())
+
+}
 
 // User Middleware
 App.use(require('./routes/auth/middleware/user')())
-
-// Auth Routes
-App.use(require('./routes/auth/')())
 
 // Secure Route Middleware
 const SecureRoute = require('./routes/auth/middleware/secure')

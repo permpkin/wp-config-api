@@ -1,12 +1,12 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-const Schema = Joi.object({
+const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
   
   object_type: Joi.array().items(Joi.string()),
-  labels: Joi.object({
+  labels: Joi.object().keys({
     name: Joi.string(),
     singular_name: Joi.string(),
     menu_name: Joi.string(),
@@ -30,7 +30,7 @@ const Schema = Joi.object({
   capabilities: Joi.array().items(Joi.string()), // TODO: update to match
   rewrite: Joi.alternatives(
     Joi.boolean(),
-    Joi.object({
+    Joi.object().keys({
       slug: Joi.string(),
       with_front: Joi.boolean(),
       hierarchical: Joi.boolean(),
@@ -41,7 +41,7 @@ const Schema = Joi.object({
   update_count_callback: Joi.string(),
   default_term: Joi.alternatives(
     Joi.string(),
-    Joi.object({
+    Joi.object().keys({
       name: Joi.string(),
       slug: Joi.string(),
       description: Joi.string()
@@ -232,10 +232,10 @@ const SchemaDoc = {
   },
   table: {
     columns: [
-      'key',
-      'description',
-      'public',
-      'hierarchical'
+      { label: "Key", key: "key", type: "key" },
+      { label: "Description", key: "description" },
+      { label: "Public", key: "public", type: "boolean" },
+      { label: "Hierarchical", key: "hierarchical", type: "boolean" }
     ]
   }
 }
