@@ -104,7 +104,10 @@ const SchemaDoc = {
       description: `(array) An array of fields`,
       type: 'repeater',
       reapeater: 'field',
-      required: true
+      required: true,
+      columns: [
+        { label: "Key", key: "key", type: "key" }
+      ],
     }
   },
   table: {

@@ -76,27 +76,27 @@ const SchemaDoc = {
       label: 'Labels',
       description: `(array) An array of labels for this taxonomy. By default, Tag labels are used for non-hierarchical taxonomies, and Category labels are used for hierarchical taxonomies. See accepted values in get_taxonomy_labels().`,
       type: 'keys',
-      default: {
-        name: { type: 'text', value: 'Taxonomies' },
-        singular_name: { type: 'text', value: 'Taxonomy' },
-        menu_name: { type: 'text', value: 'Taxonomy' },
-        all_items: { type: 'text', value: 'All Items' },
-        parent_item: { type: 'text', value: 'Parent Item' },
-        parent_item_colon: { type: 'text', value: 'Parent Item:' },
-        new_item_name: { type: 'text', value: 'New Item Name' },
-        add_new_item: { type: 'text', value: 'Add New Item' },
-        edit_item: { type: 'text', value: 'Edit Item' },
-        update_item: { type: 'text', value: 'Update Item' },
-        view_item: { type: 'text', value: 'View Item' },
-        separate_items_with_commas: { type: 'text', value: 'Separate items with commas' }, 
-        add_or_remove_items: { type: 'text', value: 'Add or remove items' },
-        choose_from_most_used: { type: 'text', value: 'Choose from the most used' },
-        popular_items: { type: 'text', value: 'Popular Items' },
-        search_items: { type: 'text', value: 'Search Items' },
-        not_found: { type: 'text', value: 'Not Found' },
-        no_terms: { type: 'text', value: 'No items' },
-        items_list: { type: 'text', value: 'Items list' },
-        items_list_navigation: { type: 'text', value: 'Items list navigation' }
+      keys: {
+        name: { type: 'text', placeholder: 'Taxonomies' },
+        singular_name: { type: 'text', placeholder: 'Taxonomy' },
+        menu_name: { type: 'text', placeholder: 'Taxonomy' },
+        all_items: { type: 'text', placeholder: 'All Items' },
+        parent_item: { type: 'text', placeholder: 'Parent Item' },
+        parent_item_colon: { type: 'text', placeholder: 'Parent Item:' },
+        new_item_name: { type: 'text', placeholder: 'New Item Name' },
+        add_new_item: { type: 'text', placeholder: 'Add New Item' },
+        edit_item: { type: 'text', placeholder: 'Edit Item' },
+        update_item: { type: 'text', placeholder: 'Update Item' },
+        view_item: { type: 'text', placeholder: 'View Item' },
+        separate_items_with_commas: { type: 'text', placeholder: 'Separate items with commas' }, 
+        add_or_remove_items: { type: 'text', placeholder: 'Add or remove items' },
+        choose_from_most_used: { type: 'text', placeholder: 'Choose from the most used' },
+        popular_items: { type: 'text', placeholder: 'Popular Items' },
+        search_items: { type: 'text', placeholder: 'Search Items' },
+        not_found: { type: 'text', placeholder: 'Not Found' },
+        no_terms: { type: 'text', placeholder: 'No items' },
+        items_list: { type: 'text', placeholder: 'Items list' },
+        items_list_navigation: { type: 'text', placeholder: 'Items list navigation' }
       },
     },
     description: {
@@ -199,22 +199,22 @@ const SchemaDoc = {
       label: 'Capabilities',
       description: `(array) Array of capabilities for this taxonomy.`,
       type: 'keys',
-      default: {
-        'manage_terms': { type: 'text', value: 'manage_categories' },
-        'edit_terms': { type: 'text', value: 'manage_categories' },
-        'delete_terms': { type: 'text', value: 'manage_categories' },
-        'assign_terms': { type: 'text', value: 'edit_posts' },
+      keys: {
+        'manage_terms': { type: 'text', placeholder: 'manage_categories' },
+        'edit_terms': { type: 'text', placeholder: 'manage_categories' },
+        'delete_terms': { type: 'text', placeholder: 'manage_categories' },
+        'assign_terms': { type: 'text', placeholder: 'edit_posts' },
       }
     },
     rewrite: {
       label: 'Rewrite',
       description: `(bool|array) Triggers the handling of rewrites for this taxonomy. Default true, using $taxonomy as slug. To prevent rewrite, set to false. To specify rewrite rules, an array can be passed with any of these keys:`,
       type: 'keys',
-      default: {
-        'slug': { type: 'text', value: 'slug' },
-        'with_front': { type: 'boolean', value: true },
-        'hierarchical': { type: 'boolean', value: true },
-        'ep_mask': { type: 'text', value: 'EP_NONE' }
+      keys: {
+        'slug': { type: 'text', placeholder: 'slug' },
+        'with_front': { type: 'boolean', placeholder: true },
+        'hierarchical': { type: 'boolean', placeholder: true },
+        'ep_mask': { type: 'text', placeholder: 'EP_NONE' }
       }
     },
     query_var: {
@@ -228,7 +228,25 @@ const SchemaDoc = {
       description: `(callable) Works much like a hook, in that it will be called when the count is updated. Default _update_post_term_count() for taxonomies attached to post types, which confirms that the objects are published before counting them. Default _update_generic_term_count() for taxonomies attached to other object types, such as users.`,
       type: 'text',
       placeholder: 'my_function'
+    },
+    default_term: {
+      label: 'Default Term',
+      description: `(string|array) Default term to be used for the taxonomy.`,
+      type: 'keys',
+      keys: {
+        'name': { type: 'text', placeholder: 'Name' },
+        'slug': { type: 'text', placeholder: 'Slug' },
+        'description': { type: 'text', placeholder: 'Description' }
+      }
     }
+    // default_term: Joi.alternatives(
+    //   Joi.string(),
+    //   Joi.object().keys({
+    //     name: Joi.string(),
+    //     slug: Joi.string(),
+    //     description: Joi.string()
+    //   })
+    // ),
   },
   table: {
     columns: [

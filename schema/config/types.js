@@ -100,34 +100,34 @@ const SchemaDoc = {
       description: `(array) An array of labels for this post type. If not set, post labels are inherited for non-hierarchical types and page labels for hierarchical ones. See get_post_type_labels() for a full list of supported labels.`,
       type: 'keys',
       allowOther: true,
-      default: {
-        'name': { type: 'text', value: 'Post Types' },
-        'singular_name': { type: 'text', value: 'Post Type' },
-        'menu_name': { type: 'text', value: 'Post Types' },
-        'name_admin_bar': { type: 'text', value: 'Post Type' },
-        'archives': { type: 'text', value: 'Item Archives' },
-        'attributes': { type: 'text', value: 'Item Attributes' },
-        'parent_item_colon': { type: 'text', value: 'Parent Item:' },
-        'all_items': { type: 'text', value: 'All Items' },
-        'add_new_item': { type: 'text', value: 'Add New Item' },
-        'add_new': { type: 'text', value: 'Add New' },
-        'new_item': { type: 'text', value: 'New Item' },
-        'edit_item': { type: 'text', value: 'Edit Item' },
-        'update_item': { type: 'text', value: 'Update Item' },
-        'view_item': { type: 'text', value: 'View Item' },
-        'view_items': { type: 'text', value: 'View Items' },
-        'search_items': { type: 'text', value: 'Search Item' },
-        'not_found': { type: 'text', value: 'Not found' },
-        'not_found_in_trash': { type: 'text', value: 'Not found in Trash' },
-        'featured_image': { type: 'text', value: 'Featured Image' },
-        'set_featured_image': { type: 'text', value: 'Set featured image' },
-        'remove_featured_image': { type: 'text', value: 'Remove featured image' },
-        'use_featured_image': { type: 'text', value: 'Use as featured image' },
-        'insert_into_item': { type: 'text', value: 'Insert into item' },
-        'uploaded_to_this_item': { type: 'text', value: 'Uploaded to this item' },
-        'items_list': { type: 'text', value: 'Items list' },
-        'items_list_navigation': { type: 'text', value: 'Items list navigation' },
-        'filter_items_list': { type: 'text', value: 'Filter items list' }
+      keys: {
+        'name': { type: 'text', placeholder: 'Post Types' },
+        'singular_name': { type: 'text', placeholder: 'Post Type' },
+        'menu_name': { type: 'text', placeholder: 'Post Types' },
+        'name_admin_bar': { type: 'text', placeholder: 'Post Type' },
+        'archives': { type: 'text', placeholder: 'Item Archives' },
+        'attributes': { type: 'text', placeholder: 'Item Attributes' },
+        'parent_item_colon': { type: 'text', placeholder: 'Parent Item:' },
+        'all_items': { type: 'text', placeholder: 'All Items' },
+        'add_new_item': { type: 'text', placeholder: 'Add New Item' },
+        'add_new': { type: 'text', placeholder: 'Add New' },
+        'new_item': { type: 'text', placeholder: 'New Item' },
+        'edit_item': { type: 'text', placeholder: 'Edit Item' },
+        'update_item': { type: 'text', placeholder: 'Update Item' },
+        'view_item': { type: 'text', placeholder: 'View Item' },
+        'view_items': { type: 'text', placeholder: 'View Items' },
+        'search_items': { type: 'text', placeholder: 'Search Item' },
+        'not_found': { type: 'text', placeholder: 'Not found' },
+        'not_found_in_trash': { type: 'text', placeholder: 'Not found in Trash' },
+        'featured_image': { type: 'text', placeholder: 'Featured Image' },
+        'set_featured_image': { type: 'text', placeholder: 'Set featured image' },
+        'remove_featured_image': { type: 'text', placeholder: 'Remove featured image' },
+        'use_featured_image': { type: 'text', placeholder: 'Use as featured image' },
+        'insert_into_item': { type: 'text', placeholder: 'Insert into item' },
+        'uploaded_to_this_item': { type: 'text', placeholder: 'Uploaded to this item' },
+        'items_list': { type: 'text', placeholder: 'Items list' },
+        'items_list_navigation': { type: 'text', placeholder: 'Items list navigation' },
+        'filter_items_list': { type: 'text', placeholder: 'Filter items list' }
       },
     },
     description: {
@@ -226,14 +226,14 @@ const SchemaDoc = {
       label: 'Capabilities',
       description: `(array) Array of capabilities for this post type. $capability_type is used as a base to construct capabilities by default. See get_post_type_capabilities().`,
       type: 'keys',
-      default: {
-        'edit_post': { type: 'text', value: 'Post Types' },
-        'read_post': { type: 'text', value: 'read_post' },
-        'delete_post': { type: 'text', value: 'delete_post' },
-        'edit_posts': { type: 'text', value: 'edit_posts' },
-        'edit_others_posts': { type: 'text', value: 'edit_others_posts' },
-        'publish_posts': { type: 'text', value: 'publish_posts' },
-        'read_private_posts': { type: 'text', value: 'read_private_posts' }
+      keys: {
+        'edit_post': { type: 'text', placeholder: 'Post Types' },
+        'read_post': { type: 'text', placeholder: 'Read Post' },
+        'delete_post': { type: 'text', placeholder: 'Delete Post' },
+        'edit_posts': { type: 'text', placeholder: 'Edit Posts' },
+        'edit_others_posts': { type: 'text', placeholder: 'Edit Others Posts' },
+        'publish_posts': { type: 'text', placeholder: 'Publish Posts' },
+        'read_private_posts': { type: 'text', placeholder: 'Read Private Posts' }
       }
     },
     map_meta_cap: {
@@ -294,12 +294,12 @@ const SchemaDoc = {
       label: 'Rewrite',
       description: `(bool|array) Triggers the handling of rewrites for this post type. To prevent rewrite, set to false. Defaults to true, using $post_type as slug. To specify rewrite rules, an array can be passed with any of these keys:`,
       type: 'keys',
-      default: {
-        'slug': { type: 'text', value: 'slug' },
-        'with_front': { type: 'boolean', value: true },
-        'feeds': { type: 'boolean', value: true },
-        'pages': { type: 'boolean', value: true },
-        'ep_mask': { type: 'text', value: 'EP_PERMALINK' }
+      keys: {
+        'slug': { type: 'text', placeholder: 'slug' },
+        'with_front': { type: 'boolean', placeholder: true },
+        'feeds': { type: 'boolean', placeholder: true },
+        'pages': { type: 'boolean', placeholder: true },
+        'ep_mask': { type: 'text', placeholder: 'EP_PERMALINK' }
       }
     },
     can_export: {
@@ -319,14 +319,20 @@ const SchemaDoc = {
       description: `(array) An array of fields`,
       type: 'repeater',
       reapeater: 'field',
-      required: true
+      required: true,
+      columns: [
+        { label: "Key", key: "key", type: "key" }
+      ],
     },
     "@taxonomies": {
       label: 'Taxonomies',
       description: `(array) An array of taxonomies`,
       type: 'repeater',
       reapeater: 'field',
-      required: true
+      required: true,
+      columns: [
+        { label: "Key", key: "key", type: "key" }
+      ],
     }
   },
   table: {
