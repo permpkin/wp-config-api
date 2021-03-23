@@ -65,8 +65,8 @@ const SchemaDoc = {
     enable_debugger: {
       label: 'Enable Debugger',
       description: `Enable PHP Debugger in DEV mode.`,
-      type: 'string[]',
-      required: false
+      type: 'boolean',
+      default: false
     }
   }
 }
