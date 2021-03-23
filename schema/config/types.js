@@ -1,14 +1,6 @@
 const Joi = require('joi');
 const { GetKey } = require('../meta')
 
-// fields
-const StylesField = require('./styles');
-// const StylesField = () => { const { Schema } = require('./styles'); return Schema };
-// const ScriptsField = () => { const { Schema } = require('./scripts'); return Schema };
-// const CustomFields = () => { const { Schema } = require('./fields'); return Schema };
-// const PageField = () => { const { Schema } = require('./pages'); return Schema };
-// const TaxonomyField = () => { const { Schema } = require('./taxonomies'); return Schema };
-
 const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
@@ -58,6 +50,7 @@ const Schema = Joi.object().keys({
 })
 
 const SchemaDoc = {
+  label: "Post Types",
   documentation: 'https://developer.wordpress.org/reference/functions/register_post_type/',
   supportsTemplates: true,
   schema: {

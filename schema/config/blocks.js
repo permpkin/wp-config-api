@@ -28,6 +28,7 @@ const Schema = Joi.object().keys({
 })
 
 const SchemaDoc = {
+  label: "Blocks",
   documentation: 'https://www.advancedcustomfields.com/resources/acf_register_block_type/',
   supportsTemplates: true,
   schema: {

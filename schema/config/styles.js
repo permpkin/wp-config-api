@@ -20,6 +20,7 @@ const Schema = Joi.object({
 })
 
 const SchemaDoc = {
+  label: "Styles",
   documentation: 'https://developer.wordpress.org/reference/functions/wp_register_style/',
   supportsTemplates: true,
   schema: {

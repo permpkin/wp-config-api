@@ -21,7 +21,9 @@ const Schema = Joi.object().keys({
 })
 
 const SchemaDoc = {
+  label: "Settings",
   documentation: '#',
+  isSingular: true,
   supportsTemplates: true,
   schema: {
     hide_block_categories: {

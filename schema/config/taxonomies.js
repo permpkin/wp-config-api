@@ -53,6 +53,7 @@ const Schema = Joi.object().keys({
 })
 
 const SchemaDoc = {
+  label: "Taxonomies",
   documentation: 'https://developer.wordpress.org/reference/functions/register_taxonomy/',
   supportsTemplates: false,
   schema: {

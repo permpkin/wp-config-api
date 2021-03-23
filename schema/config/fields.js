@@ -26,6 +26,7 @@ const Schema = Joi.object().keys({
 
 
 const SchemaDoc = {
+  label: "Custom Fields",
   documentation: 'https://developer.wordpress.org/reference/functions/register_post_type/',
   supportsTemplates: true,
   schema: {

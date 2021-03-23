@@ -36,6 +36,7 @@ const Schema = Joi.object().keys({
 })
 
 const SchemaDoc = {
+  label: "Pages",
   documentation: 'https://developer.wordpress.org/reference/functions/add_menu_page/',
   supportsTemplates: false,
   schema: {
