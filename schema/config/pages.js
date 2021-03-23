@@ -54,6 +54,25 @@ const SchemaDoc = {
       required: true,
       placeholder: 'My Page Title'
     },
+    type: {
+      // group: 'Labels',
+      label: 'Page Type',
+      description: `(string) (Required) What type of page this should be registered as.`,
+      type: 'select',
+      options: [
+        'option',
+        'comments',
+        'menu',
+        'settings',
+        'pages',
+        'themes',
+        'links',
+        'users',
+        'management',
+        'media'
+      ],
+      required: true
+    },
     description: {
       label: 'Description',
       description: `(string) A short descriptive summary of what the page is for.`,
@@ -135,6 +154,7 @@ const SchemaDoc = {
     columns: [
       { label: "Key", key: "key", type: "key" },
       { label: "Title", key: "page_title" },
+      { label: "Type", key: "type" },
       { label: "Description", key: "description" }
     ]
   }
