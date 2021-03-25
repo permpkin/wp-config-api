@@ -1,2 +1,0 @@
-(this["webpackJsonpwp-factory"]=this["webpackJsonpwp-factory"]||[]).push([[10],{202:function(t,n,e){"use strict";e.r(n),e.d(n,"default",(function(){return i}));var c=e(12),u=e(13),i=function(){function t(){Object(c.a)(this,t)}return Object(u.a)(t,[{key:"getConfig",value:function(t){}},{key:"setConfig",value:function(t){}}]),t}()}}]);
-//# sourceMappingURL=10.94cbb0ee.chunk.js.map

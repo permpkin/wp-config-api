@@ -21,6 +21,18 @@ module.exports = () => {
   })
 
   /**
+   * Return site schema fields
+   */
+   Router.get('/schema', (req, res) => {
+
+    // send key schema
+    var { SchemaDoc } = require(`../../../../schema/config/sites`)
+
+    res.json(SchemaDoc)
+
+  })
+
+  /**
    * Add new "Site"
    */
   Router.post('/', (req, res) => {
