@@ -177,6 +177,36 @@ module.exports = () => {
   });
 
   /**
+   * Validate config key by :type
+   */
+  Router.post('/:type/validate', (req, res) => {
+
+    req.errors = [];
+
+    // is the body object empty?
+    if (Object.entries(req.body).length <= 0) return res.sendStatus(400);
+
+    var { Schema } = require(`../../../../../schema/config/${req.params.type}`)
+    
+    // validate the body
+    var Result = ObjectValidator(Schema, req, res, req.body, req.params.type in req.config ? req.config[req.params.type] : false);
+
+    // where there errors?
+    if (req.errors.length > 0) {
+
+      // return json errors
+      res.status(400).json({errors: req.errors})
+
+    } else {
+
+      // not modified
+      res.status(200).json({success: true})
+
+    }
+
+  });
+
+  /**
    * Delete the entry by key
    */
   Router.delete('/:type/:key', (req, res) => {
