@@ -26,7 +26,7 @@ const Schema = Joi.object().keys({
 
 
 const SchemaDoc = {
-  label: "Custom Fields",
+  label: "Custom Field Group",
   documentation: 'https://developer.wordpress.org/reference/functions/register_post_type/',
   supportsTemplates: true,
   schema: {
@@ -104,7 +104,7 @@ const SchemaDoc = {
       label: 'Fields',
       description: `(array) An array of fields`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'field',
       required: true,
       columns: [
         { label: "Key", key: "key", type: "key" }

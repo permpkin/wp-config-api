@@ -311,7 +311,7 @@ const SchemaDoc = {
       label: 'Fields',
       description: `(array) An array of fields`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'fields',
       required: true,
       columns: [
         { label: "Key", key: "key", type: "key" }
@@ -321,7 +321,7 @@ const SchemaDoc = {
       label: 'Taxonomies',
       description: `(array) An array of taxonomies`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'taxonomies',
       required: true,
       columns: [
         { label: "Key", key: "key", type: "key" }

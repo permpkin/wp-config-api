@@ -154,7 +154,7 @@ const SchemaDoc = {
       label: 'Fields',
       description: `(array) An array of fields`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'fields',
       columns: [
         { label: "Key", key: "key", type: "key" },
         { label: "Description", key: "description" }
@@ -165,7 +165,7 @@ const SchemaDoc = {
       label: 'Styles',
       description: `(array) An array of styles`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'styles',
       columns: [
         { label: "Key", key: "key", type: "key" },
         { label: "Source", key: "source" }
@@ -176,7 +176,7 @@ const SchemaDoc = {
       label: 'Scripts',
       description: `(array) An array of scripts`,
       type: 'repeater',
-      reapeater: 'field',
+      repeater: 'scripts',
       columns: [
         { label: "Key", key: "key", type: "key" },
         { label: "Source", key: "source" }

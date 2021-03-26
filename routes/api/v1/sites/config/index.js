@@ -87,6 +87,7 @@ module.exports = () => {
     'settings',
     'blocks',
     'fields',
+    'field',
     'pages',
     'scripts',
     'styles',
