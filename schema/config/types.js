@@ -27,14 +27,27 @@ const Schema = Joi.object().keys({
   menu_position: Joi.number(),
   menu_icon: Joi.string(),
   capability_type: Joi.string(),
-  capabilities: Joi.array().items(Joi.string()),
+  capabilities: Joi.object().keys({
+    edit_post: Joi.string(),
+    read_post: Joi.string(),
+    delete_post: Joi.string(),
+    edit_posts: Joi.string(),
+    edit_others_posts: Joi.string(),
+    publish_posts: Joi.string(),
+    read_private_posts: Joi.string()
+  }),
   map_meta_cap: Joi.boolean(),
   supports: Joi.array().items(Joi.string()),
   register_meta_box_cb: Joi.string(),
   taxonomies: Joi.array().items(Joi.string()),
   has_archive: Joi.boolean(),
-  rewrite: Joi.string(),
-    // { slug:string, with_front:bool, feeds:bool, pages:bool, ep_mask:int }
+  rewrite: Joi.object().keys({
+    slug: Joi.string(),
+    with_front: Joi.boolean(),
+    feeds: Joi.boolean(),
+    pages: Joi.boolean(),
+    ep_mask: Joi.number()
+  }),
   query_var: Joi.string(),
   can_export: Joi.boolean(),
   delete_with_user: Joi.boolean(),
