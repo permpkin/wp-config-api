@@ -155,6 +155,9 @@ const SchemaDoc = {
       description: `(array) An array of fields`,
       type: 'repeater',
       repeater: 'fields',
+      force: {
+        object_type: ['!this'] // TODO: force "this"
+      },
       columns: [
         { label: "Key", key: "key", type: "key" },
         { label: "Description", key: "description" }

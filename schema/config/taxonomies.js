@@ -27,7 +27,12 @@ const Schema = Joi.object().keys({
   show_admin_column: Joi.boolean(),
   meta_box_cb: Joi.string(),
   meta_box_sanitize_cb: Joi.string(),
-  capabilities: Joi.array().items(Joi.string()), // TODO: update to match
+  capabilities: Joi.object().keys({
+    manage_terms: Joi.string(),
+    edit_terms: Joi.string(),
+    delete_terms: Joi.string(),
+    assign_terms: Joi.string()
+  }),
   rewrite: Joi.alternatives(
     Joi.boolean(),
     Joi.object().keys({

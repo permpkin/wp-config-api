@@ -309,20 +309,26 @@ const SchemaDoc = {
     },
     "@fields": {
       label: 'Fields',
-      description: `(array) An array of fields`,
+      description: `(array) An array of custom fields to attach to this custom post type.`,
       type: 'repeater',
       repeater: 'fields',
       required: true,
+      force: {
+        object_type: ['!this']
+      },
       columns: [
         { label: "Key", key: "key", type: "key" }
       ],
     },
     "@taxonomies": {
       label: 'Taxonomies',
-      description: `(array) An array of taxonomies`,
+      description: `(array) An array of taxonomies to attach to this custom post type.`,
       type: 'repeater',
       repeater: 'taxonomies',
       required: true,
+      force: {
+        object_type: ['!this']
+      },
       columns: [
         { label: "Key", key: "key", type: "key" }
       ],

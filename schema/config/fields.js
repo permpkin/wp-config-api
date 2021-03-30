@@ -40,6 +40,13 @@ const SchemaDoc = {
       required: true,
       placeholder: 'my-field-group'
     },
+    object_type: {
+      // group: 'Relation',
+      label: 'Object Type',
+      description: `(array) (Required) Array of object types with which the field group should be associated.`,
+      type: 'string[]',
+      required: true
+    },
     title: {
       label: 'Title',
       description: `(string) Visible in metabox handle`,
