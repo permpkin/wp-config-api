@@ -19,7 +19,8 @@ const Schema = Joi.object().keys({
     key: Joi.string().default((parent, helpers)=>{return GetKey('field_')}),
     label: Joi.string(),
     name: Joi.string(),
-    type: Joi.string()
+    type: Joi.string(),
+    description: Joi.string(),
   })).required()
 
 })
@@ -104,10 +105,11 @@ const SchemaDoc = {
       label: 'Fields',
       description: `(array) An array of fields`,
       type: 'repeater',
-      repeater: 'field',
+      repeater: 'fields',
       required: true,
       columns: [
-        { label: "Key", key: "key", type: "key" }
+        { label: "Key", key: "key", type: "key" },
+        { label: "Description", key: "description" }
       ],
     }
   },
