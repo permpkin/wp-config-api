@@ -5,7 +5,7 @@ const Schema = Joi.object().keys({
   
   key: Joi.string().default((parent, helpers)=>{return GetKey()}),
 
-  label: Joi.string(),
+  label: Joi.string().required(),
   labels: Joi.object().keys({
     name: Joi.string(),
     singular_name: Joi.string(),

@@ -7,9 +7,13 @@ const Schema = Joi.object().keys({
 
   title: Joi.string().required(),
   description: Joi.string(),
-  location: Joi.array().items(
-    Joi.array()
+  object_type: Joi.array().items(
+    Joi.string()
   ),
+  location: Joi.array().items(Joi.alternatives(
+    Joi.string(),
+    Joi.array()
+  )),
   menu_order: Joi.string(),
   position: Joi.string(),
   style: Joi.string(),
@@ -21,7 +25,7 @@ const Schema = Joi.object().keys({
     name: Joi.string(),
     type: Joi.string(),
     description: Joi.string(),
-  })).required()
+  }))
 
 })
 
@@ -112,8 +116,7 @@ const SchemaDoc = {
       label: 'Fields',
       description: `(array) An array of fields`,
       type: 'repeater',
-      repeater: 'fields',
-      required: true,
+      repeater: 'field',
       columns: [
         { label: "Key", key: "key", type: "key" },
         { label: "Description", key: "description" }

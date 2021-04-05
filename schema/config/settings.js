@@ -4,8 +4,11 @@ const Schema = Joi.object().keys({
 
   hide_block_categories: Joi.array(),
   theme_support: Joi.array().items(
-    Joi.string().valid('align-wide', 'editor-styles', 'post-formats', 'post-thumbnails', 'html5', 'title-tag', 'custom-background'),
+    Joi.string()
   ),
+  // theme_support: Joi.array().items(
+  //   Joi.string().valid('align-wide', 'editor-styles', 'post-formats', 'post-thumbnails', 'html5', 'title-tag', 'custom-background'),
+  // ),
   allowed_origins: Joi.array().items(Joi.string()).default(['*']),
   disabled_admin_pages: Joi.array().items(Joi.string().valid('dashboard','jetpack','posts','media','pages','comments','appearance','plugins','users','tools','settings')),
   disabled_user_roles: Joi.array().items(Joi.string()),
@@ -26,24 +29,26 @@ const SchemaDoc = {
   isSingular: true,
   supportsTemplates: true,
   schema: {
-    hide_block_categories: {
-      // group: 'Labels',
-      label: 'Hide Block Categories',
-      description: `List Block categories to hide from the admin interface.`,
-      type: 'string[]',
-      required: false
-    },
     theme_support: {
-      // TODO: swap for multiselect
       label: 'Theme Support',
       description: `Register theme support for various features.`,
       type: 'string[]',
-      required: false
+      required: false,
+      autocomplete: [
+        'align-wide',
+        'editor-styles',
+        'post-formats',
+        'post-thumbnails',
+        'html5',
+        'title-tag',
+        'custom-background'
+      ]
     },
     allowed_origins: {
       label: 'Allowed Origins',
       description: `Define site origins allowed to access this site.`,
       type: 'string[]',
+      placeholder: "example.com, localhost, 127.0.0.1",
       required: false
     },
     disabled_admin_pages: {
@@ -61,6 +66,13 @@ const SchemaDoc = {
     image_sizes: {
       label: 'Image Sizes',
       description: `Enabled default Image sizes.`,
+      type: 'string[]',
+      required: false
+    },
+    hide_block_categories: {
+      // group: 'Labels',
+      label: 'Hide Block Categories',
+      description: `List Block categories to hide from the admin interface.`,
       type: 'string[]',
       required: false
     },

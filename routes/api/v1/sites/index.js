@@ -10,7 +10,7 @@ module.exports = () => {
    */
    Router.get('/', (req, res) => {
 
-    GetAppMeta(req.user)
+    GetMeta(req.user)
       .then(meta => {
 
         // return user sites.
@@ -37,7 +37,7 @@ module.exports = () => {
    */
   Router.post('/', (req, res) => {
 
-    GetAppMeta(req.user)
+    GetMeta(req.user)
       .then(meta => {
 
         var UpdatedMeta = meta?.sites || []
@@ -50,6 +50,10 @@ module.exports = () => {
         var SiteMeta = {
           key: GetKey(),
           ...objectInsert,
+          environment: {
+            name: "Development",
+            "@keys": {}
+          },
           "@config": {}
         }
 
@@ -57,7 +61,7 @@ module.exports = () => {
 
         meta['sites'] = UpdatedMeta
 
-        UpdateAppMeta(req.user, meta)
+        UpdateMeta(req.user, meta)
           .then(() => {
 
             // return user sites.
@@ -69,9 +73,55 @@ module.exports = () => {
 
   })
 
+  /**
+   * @description return current root environment values
+   */
+  Router.get('/environment', (req, res, next) => {
+
+    var environment = res.locals.meta.sites[res.locals.siteIndex]['environment'];
+
+    // return environment variables for site
+    res.send({
+      name: environment.name,
+      "@keys": {
+        ...res.locals.meta.environment ?? {},
+        ...environment['@keys'] ?? {}
+      }
+    });
+
+  })
+
+  /**
+   * @description update current root environment values
+   */
+  Router.post('/environment', (req, res, next) => {
+
+    var envPost = {}
+    
+    Object.keys(req.body).forEach(key => {
+
+      return envPost[key.replace(/[^\w\.\-]/g, "")] = req.body[key];
+
+    })
+
+    res.locals.meta['environment'] = {
+      ...res.locals.meta['environment'],
+      ...envPost
+    }
+
+    UpdateMeta(req.user, res.locals.meta)
+      .then(() => {
+
+        // return the updated field
+        res.status(200).json(res.locals.meta['environment']);
+
+      })
+
+  })
+
   Router.use('/:siteKey', (req, res, next) => {
 
-    GetAppMeta(req.user)
+    GetMeta(req.user)
       .then(meta => {
 
         const SiteMeta = meta?.sites || []
@@ -113,7 +163,7 @@ module.exports = () => {
 
     res.locals.meta.sites[res.locals.siteIndex] = SiteMeta
 
-    UpdateAppMeta(req.user, res.locals.meta)
+    UpdateMeta(req.user, res.locals.meta)
       .then(() => {
 
         // return user sites.
@@ -130,7 +180,7 @@ module.exports = () => {
     
     res.locals.meta.sites.splice(res.locals.siteIndex, 1)
 
-    UpdateAppMeta(req.user, res.locals.meta)
+    UpdateMeta(req.user, res.locals.meta)
       .then(() => {
 
         // return user sites.
@@ -144,6 +194,26 @@ module.exports = () => {
    * Setup "Config" routes.
    */
   Router.use('/:siteKey/config', require('./config/')())
+
+  /**
+   * Setup "Environment" routes.
+   */
+  Router.use('/:siteKey/environment', require('./environment')())
+
+  /**
+   * Setup "Seed" routes.
+   */
+  Router.use('/:siteKey/seeds', require('./seeds')())
+
+  /**
+   * Setup "Plugin" routes.
+   */
+  Router.use('/:siteKey/plugins', require('./plugins')())
+
+  /**
+   * Setup "Templates" routes.
+   */
+  Router.use('/:siteKey/templates', require('./templates')())
 
   return Router
 

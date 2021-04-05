@@ -7,6 +7,7 @@ const Schema = Joi.object().keys({
 
   type: Joi.string().valid('option', 'comments', 'menu', 'settings', 'pages', 'themes', 'links', 'users', 'management', 'media'),
   page_title: Joi.string(),
+  type: Joi.string().required(),
   description: Joi.string(),
   menu_title: Joi.string(),
   capability: Joi.array().items(Joi.string()),

@@ -64,7 +64,12 @@ const SchemaDoc = {
       description: `(string[]) (Optional) An array of areas to inject this script. Available values are 'front', 'back' or 'both'.
       Default value: array('front')`,
       type: 'string[]',
-      default: ["front"]
+      default: ["front"],
+      autocomplete: [
+        "front",
+        "back",
+        "both"
+      ],
     },
     footer: {
       // group: 'Labels',

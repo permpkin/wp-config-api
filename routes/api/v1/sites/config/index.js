@@ -1,5 +1,5 @@
 const express = require('express')
-const { UpdateMeta, GetMeta, GetAppMeta, UpdateAppMeta, GetKey } = require('../../../../../schema/meta')
+const { UpdateMeta, GetMeta, GetAppMeta, GetKey } = require('../../../../../schema/meta')
 const ObjectValidator = require(`./_ObjectArray.js`);
 
 module.exports = () => {
@@ -55,7 +55,7 @@ module.exports = () => {
 
       res.locals.meta.sites[res.locals.siteIndex]['@config'] = req.config
 
-      UpdateAppMeta(req.user, res.locals.meta)
+      UpdateMeta(req.user, res.locals.meta)
         .then(() => {
 
           // return the updated json fields (by :type)
@@ -149,7 +149,7 @@ module.exports = () => {
 
       res.locals.meta.sites[res.locals.siteIndex]['@config'] = req.config
 
-      UpdateAppMeta(req.user, res.locals.meta)
+      UpdateMeta(req.user, res.locals.meta)
         .then(() => {
 
           // return the updated json fields (by :type)
@@ -236,7 +236,7 @@ module.exports = () => {
 
     res.locals.meta.sites[res.locals.siteIndex]['@config'] = req.config
 
-    UpdateAppMeta(req.user, res.locals.meta)
+    UpdateMeta(req.user, res.locals.meta)
       .then(() => {
 
         // return the updated json fields (by :type)
